@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-final class SearchViewController: UIViewController {
+class SearchViewController: UIViewController {
     
     // UI 컴포넌트들
     private let searchBar = UISearchBar()
@@ -107,8 +107,20 @@ extension SearchViewController: UISearchBarDelegate {
         guard let query = searchBar.text, !query.isEmpty else { return }
         searchBar.resignFirstResponder()
         
-        // 이 부분은 다음 단계에서 ViewModel로 연결 예정
-        // viewModel.search(query: query)
+        // 네트워크 호출
+        BookService.shared.searchBooks(query: query) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let books):
+                    // 검색 결과를 문자열로 변환 (임시)
+                    self?.searchResults = books.map { $0.title }
+                case .failure(let error):
+                    print("검색 실패:", error.localizedDescription)
+                    self?.searchResults = []
+                }
+            }
+        }
     }
 }
+
 
