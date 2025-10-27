@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-final class BookDetailViewController: UIViewController {
+class BookDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

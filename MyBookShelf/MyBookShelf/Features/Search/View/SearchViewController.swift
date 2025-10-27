@@ -3,25 +3,36 @@ import SnapKit
 
 class SearchViewController: UIViewController {
     
+    // UI 컴포넌트들
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
     private let emptyLabel = UILabel()
     
-    // 검색 결과를 Book 배열로 받음
-    private var searchResults: [Book] = [] {
-        didSet {
-            tableView.reloadData()
-            updateUIState()
-        }
-    }
+    // 뷰모델
+    private let viewModel = SearchViewModel()
     
+    // 라이프싸이클
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupLayout()
         updateUIState()
         tableView.delegate = self
-
+        
+        bindViewModel()
+    }
+    
+    // 뷰모델 바인딩
+    private func bindViewModel() {
+        viewModel.whenUpdated = { [weak self] in
+            guard let self = self else { return }
+            self.tableView.reloadData()
+            self.updateUIState()
+        }
+        
+        viewModel.whenError = { errorMessage in
+            print("검색 실패:", errorMessage)
+        }
     }
 }
 
@@ -68,7 +79,7 @@ extension SearchViewController {
     }
     
     private func updateUIState() {
-        if searchResults.isEmpty {
+        if viewModel.books.isEmpty {
             if searchBar.text?.isEmpty == true {
                 tableView.isHidden = true
                 emptyLabel.isHidden = true
@@ -81,50 +92,40 @@ extension SearchViewController {
             emptyLabel.isHidden = true
         }
     }
+
 }
 
-// 테이블뷰
+// UITableViewDataSource
 extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        searchResults.count
+        viewModel.books.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath) as? BookTableViewCell else {
             return UITableViewCell()
         }
-        let book = searchResults[indexPath.row]
+        let book = viewModel.books[indexPath.row]
         cell.configure(with: book)
         return cell
     }
 }
 
-// 서치바
-extension SearchViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let query = searchBar.text, !query.isEmpty else { return }
-        searchBar.resignFirstResponder()
-        
-        BookService.shared.searchBooks(query: query) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let books):
-                    self?.searchResults = books
-                case .failure(let error):
-                    print("검색 실패:", error.localizedDescription)
-                    self?.searchResults = []
-                }
-            }
-        }
-    }
-}
-
-// 책 상세화면 모달
+// UITableViewDelegate
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = BookDetailViewController()
         detailVC.modalPresentationStyle = .pageSheet
         present(detailVC, animated: true)
+    }
+}
+
+// UISearchBarDelegate
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text, !query.isEmpty else { return }
+        searchBar.resignFirstResponder()
+        viewModel.searchBooks(query: query)
     }
 }
 
