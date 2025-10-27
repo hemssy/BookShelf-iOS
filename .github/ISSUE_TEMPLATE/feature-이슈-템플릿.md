@@ -2,7 +2,7 @@
 name: feature-이슈-템플릿
 about: 기능추가 이슈 템플릿입니다!
 title: "[Feat] "
-labels: "✨ Feature"
+labels: "✨ Feature, \U0001F41E Fix"
 assignees: hemssy
 
 ---
