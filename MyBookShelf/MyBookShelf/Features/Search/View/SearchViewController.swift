@@ -20,6 +20,8 @@ class SearchViewController: UIViewController {
         setupUI()
         setupLayout()
         updateUIState()
+        tableView.delegate = self
+
     }
 }
 
@@ -114,6 +116,15 @@ extension SearchViewController: UISearchBarDelegate {
                 }
             }
         }
+    }
+}
+
+// 책 상세화면 모달
+extension SearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailVC = BookDetailViewController()
+        detailVC.modalPresentationStyle = .pageSheet
+        present(detailVC, animated: true)
     }
 }
 
