@@ -9,9 +9,9 @@ protocol BookDetailViewControllerDelegate: AnyObject {
 class BookDetailViewController: UIViewController {
 
     var book: Book?
-    // BookDetailViewController에 delegate 프로퍼티 추가
     weak var delegate: BookDetailViewControllerDelegate?
 
+    private var viewModel: BookDetailViewModel?
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -31,7 +31,13 @@ class BookDetailViewController: UIViewController {
         setupScrollView()
         setupUI()
         setupLayout()
+        setupViewModel()
         updateUI()
+    }
+    
+    private func setupViewModel() {
+        guard let book = book else { return }
+        viewModel = BookDetailViewModel(book: book)
     }
     
     private func setupScrollView() {
@@ -144,38 +150,14 @@ class BookDetailViewController: UIViewController {
 
 
 
-    private func updateUI() {
-        guard let book = book else { return }
-
-        titleLabel.text = book.title
-        authorLabel.text = book.authors?.joined(separator: ", ")
-
-        if let price = book.price {
-            let formatted = NumberFormatter.localizedString(from: NSNumber(value: price), number: .decimal)
-            priceLabel.text = "\(formatted)원"
-        } else {
-            priceLabel.text = "가격 정보 없음"
-        }
-
-        if let contents = book.contents {
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 13
-            paragraphStyle.alignment = .center
-
-            let attributedText = NSAttributedString(
-                string: contents,
-                attributes: [
-                    .font: UIFont.systemFont(ofSize: 15),
-                    .foregroundColor: UIColor.label,
-                    .paragraphStyle: paragraphStyle
-                ]
-            )
-
-            contentsLabel.attributedText = attributedText
-        }
-
-
-        if let urlStr = book.thumbnail, let url = URL(string: urlStr) {
+    func updateUI() {
+        guard let vm = viewModel else { return }
+        titleLabel.text = vm.title
+        authorLabel.text = vm.author
+        priceLabel.text = vm.priceText
+        contentsLabel.attributedText = vm.contents
+        
+        if let url = vm.thumbnailURL {
             DispatchQueue.global().async {
                 if let data = try? Data(contentsOf: url),
                    let image = UIImage(data: data) {
@@ -185,7 +167,9 @@ class BookDetailViewController: UIViewController {
                 }
             }
         }
+
     }
+
 
     // 모달 닫기 액션
     @objc private func dismissModal() {
