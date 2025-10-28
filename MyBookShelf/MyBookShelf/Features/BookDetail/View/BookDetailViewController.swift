@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import CoreData
 
 // BookDetailViewControllerDelegate 정의
 protocol BookDetailViewControllerDelegate: AnyObject {
@@ -176,15 +177,25 @@ class BookDetailViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    // 담기 버튼 탭 시 실행되는 함수
     @objc private func addBookTapped() {
         guard let book = book else { return }
 
-        // 모달을 닫은 뒤에 delegate 실행
+        // 코어데이터 저장
+        let savedBooksViewModel = SavedBooksViewModel()
+        savedBooksViewModel.addBook(
+            title: book.title,
+            author: book.authors?.first ?? "저자 미상",
+            price: book.price.map { "\($0)" } ?? "-",
+            thumbnailURL: book.thumbnail
+        )
+
+        // 바로 모달 닫기 + delegate 실행
         dismiss(animated: true) {
             self.delegate?.didAddBook(book)
         }
     }
+
+
 
     
 }
