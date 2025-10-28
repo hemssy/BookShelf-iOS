@@ -117,6 +117,10 @@ extension SearchViewController: UITableViewDelegate {
         let selectedBook = viewModel.books[indexPath.row]
         let detailVC = BookDetailViewController()
         detailVC.book = selectedBook
+        
+        // delegate 연결
+        detailVC.delegate = self
+        
         detailVC.modalPresentationStyle = .pageSheet
         present(detailVC, animated: true)
     }
@@ -132,3 +136,15 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
+// delegate 채택
+extension SearchViewController: BookDetailViewControllerDelegate {
+    func didAddBook(_ book: Book) {
+        let alert = UIAlertController(
+            title: nil,  // 타이틀은 뺌
+            message: "『\(book.title ?? "")』 담기 완료!",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true)
+    }
+}

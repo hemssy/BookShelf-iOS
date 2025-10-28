@@ -1,9 +1,17 @@
 import UIKit
 import SnapKit
 
+// BookDetailViewControllerDelegate 정의
+protocol BookDetailViewControllerDelegate: AnyObject {
+    func didAddBook(_ book: Book)
+}
+
 class BookDetailViewController: UIViewController {
 
     var book: Book?
+    // BookDetailViewController에 delegate 프로퍼티 추가
+    weak var delegate: BookDetailViewControllerDelegate?
+
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -75,6 +83,10 @@ class BookDetailViewController: UIViewController {
         addButton.setTitleColor(.white, for: .normal)
         addButton.titleLabel?.font = .boldSystemFont(ofSize: 17)
         addButton.layer.cornerRadius = 12
+        
+        // 담기 버튼 액션 연결
+        addButton.addTarget(self, action: #selector(addBookTapped), for: .touchUpInside)
+
 
         [titleLabel, authorLabel, thumbnailImageView, priceLabel, contentsLabel].forEach {
             contentView.addSubview($0)
@@ -179,5 +191,17 @@ class BookDetailViewController: UIViewController {
     @objc private func dismissModal() {
         dismiss(animated: true, completion: nil)
     }
+    
+    // 담기 버튼 탭 시 실행되는 함수
+    @objc private func addBookTapped() {
+        guard let book = book else { return }
+
+        // 모달을 닫은 뒤에 delegate 실행
+        dismiss(animated: true) {
+            self.delegate?.didAddBook(book)
+        }
+    }
+
+    
 }
 
