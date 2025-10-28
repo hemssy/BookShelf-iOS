@@ -114,10 +114,13 @@ extension SearchViewController: UITableViewDataSource {
 // UITableViewDelegate
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedBook = viewModel.books[indexPath.row]
         let detailVC = BookDetailViewController()
+        detailVC.book = selectedBook
         detailVC.modalPresentationStyle = .pageSheet
         present(detailVC, animated: true)
     }
+
 }
 
 // UISearchBarDelegate
