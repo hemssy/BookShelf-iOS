@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-class BookTableViewCell: UITableViewCell {
+class SavedBookCell: UITableViewCell {
     
     private let titleLabel = UILabel()
     private let authorLabel = UILabel()
@@ -49,10 +49,10 @@ class BookTableViewCell: UITableViewCell {
         }
     }
     
-    func configure(with book: Book) {
-        titleLabel.text = book.title
-        authorLabel.text = book.authors?.first ?? "저자 미상"
-        priceLabel.text = book.price.map { "\($0)원" } ?? "-"
+    func configure(with book: SavedBookEntity) {
+        titleLabel.text = book.title ?? "제목 없음"
+        authorLabel.text = book.author ?? "저자 미상"
+        priceLabel.text = (book.price ?? "-").appending("원")
     }
 }
 
