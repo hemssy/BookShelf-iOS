@@ -2,7 +2,7 @@
 name: refactoring-이슈-템플릿
 about: 리팩토링 이슈 템플릿입니다!
 title: "[Refactor]"
-labels: "\U0001F528 Refactor"
+labels: ''
 assignees: hemssy
 
 ---

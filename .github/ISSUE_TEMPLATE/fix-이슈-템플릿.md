@@ -2,7 +2,7 @@
 name: fix-이슈-템플릿
 about: 버그수정 이슈 템플릿입니다!
 title: "[Fix]"
-labels: "\U0001F41E Fix"
+labels: ''
 assignees: hemssy
 
 ---
