@@ -172,7 +172,6 @@ class BookDetailViewController: UIViewController {
     }
 
 
-    // 모달 닫기 액션
     @objc private func dismissModal() {
         dismiss(animated: true, completion: nil)
     }
@@ -189,11 +188,17 @@ class BookDetailViewController: UIViewController {
             thumbnailURL: book.thumbnail
         )
 
-        // 바로 모달 닫기 + delegate 실행
-        dismiss(animated: true) {
-            self.delegate?.didAddBook(book)
-        }
+        // 알림 전송 (SavedBooksViewController 업데이트용으로)
+        NotificationCenter.default.post(name: NSNotification.Name("BookAdded"), object: nil)
+
+        // 책 담기 완료 알럿 표시
+        let alert = UIAlertController(title: "책이 담겼습니다!", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
+            self.dismiss(animated: true)
+        })
+        present(alert, animated: true)
     }
+
 
 
 
