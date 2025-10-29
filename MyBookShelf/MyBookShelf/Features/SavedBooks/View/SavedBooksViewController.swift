@@ -12,6 +12,14 @@ class SavedBooksViewController: UIViewController {
         view.backgroundColor = .systemBackground
         title = "내 책장"
         
+        // 전체삭제 버튼
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "전체삭제",
+            style: .plain,
+            target: self,
+            action: #selector(deleteAllBooks)
+        )
+        
         setupUI()
         setupLayout()
         bindViewModel()
@@ -66,6 +74,11 @@ class SavedBooksViewController: UIViewController {
     @objc private func refreshBooks() {
         viewModel.fetchBooks()
     }
+    
+    @objc private func deleteAllBooks() {
+        print("전체 삭제 버튼 눌림")
+    }
+
 }
 
 // UITableViewDataSource
