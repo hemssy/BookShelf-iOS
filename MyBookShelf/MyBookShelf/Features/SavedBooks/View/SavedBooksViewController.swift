@@ -76,8 +76,18 @@ class SavedBooksViewController: UIViewController {
     }
     
     @objc private func deleteAllBooks() {
-        print("전체 삭제 버튼 눌림")
+        let alert = UIAlertController(
+            title: "전체 삭제",
+            message: "담은 책을 모두 삭제하시겠습니까?",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { [weak self] _ in
+            self?.viewModel.deleteAllBooks()
+        }))
+        present(alert, animated: true)
     }
+
 
 }
 

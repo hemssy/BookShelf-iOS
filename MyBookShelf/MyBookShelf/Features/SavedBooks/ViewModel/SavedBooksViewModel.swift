@@ -28,9 +28,7 @@ class SavedBooksViewModel {
 
         do {
             try context.save()
-            print("책 저장 성공: \(title)")
         } catch {
-            print("코어데이터 Save 실패:", error.localizedDescription)
         }
     }
     
@@ -39,6 +37,18 @@ class SavedBooksViewModel {
         do {
             try context.save()
             fetchBooks()   
+        } catch {
+        }
+    }
+    
+    func deleteAllBooks() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = SavedBookEntity.fetchRequest()
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try context.execute(batchDeleteRequest)
+            try context.save()
+            savedBooks.removeAll()
+            onUpdate?()
         } catch {
         }
     }
