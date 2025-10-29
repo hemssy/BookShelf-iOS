@@ -16,6 +16,9 @@ class SavedBooksViewController: UIViewController {
         setupLayout()
         bindViewModel()
         viewModel.fetchBooks()
+        
+        tableView.delegate = self
+
     }
     
     private func setupUI() {
@@ -24,7 +27,7 @@ class SavedBooksViewController: UIViewController {
         tableView.rowHeight = 90
         view.addSubview(tableView)
         
-        emptyLabel.text = "아직 담은 책이 없습니다 📚"
+        emptyLabel.text = "아직 담은 책이 없습니다."
         emptyLabel.textAlignment = .center
         emptyLabel.textColor = .secondaryLabel
         view.addSubview(emptyLabel)
@@ -54,7 +57,7 @@ class SavedBooksViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDataSource
+// UITableViewDataSource
 extension SavedBooksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.savedBooks.count
@@ -69,4 +72,24 @@ extension SavedBooksViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// UITableViewDelegate
+extension SavedBooksViewController: UITableViewDelegate {
+    // 스와이프 삭제 액션 추가
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { [weak self] _, _, completionHandler in
+            guard let self = self else { return }
+
+            let bookToDelete = self.viewModel.savedBooks[indexPath.row]
+            self.viewModel.deleteBook(bookToDelete)   
+            completionHandler(true)
+        }
+
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
 

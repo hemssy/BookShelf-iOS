@@ -33,5 +33,18 @@ class SavedBooksViewModel {
             print("코어데이터 Save 실패:", error.localizedDescription)
         }
     }
+    
+    func deleteBook(_ book: SavedBookEntity) {
+        context.delete(book)
+        do {
+            try context.save()
+            print("책 삭제 성공: \(book.title ?? "")")
+            fetchBooks()   
+        } catch {
+            print("삭제 실패:", error.localizedDescription)
+        }
+    }
+
+
 }
 
