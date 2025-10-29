@@ -19,6 +19,13 @@ class SavedBooksViewController: UIViewController {
         
         tableView.delegate = self
 
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refreshBooks),
+            name: NSNotification.Name("BookAdded"),
+            object: nil
+        )
+        
     }
     
     private func setupUI() {
@@ -54,6 +61,10 @@ class SavedBooksViewController: UIViewController {
         let hasBooks = !viewModel.savedBooks.isEmpty
         tableView.isHidden = !hasBooks
         emptyLabel.isHidden = hasBooks
+    }
+    
+    @objc private func refreshBooks() {
+        viewModel.fetchBooks()
     }
 }
 

@@ -38,10 +38,8 @@ class SavedBooksViewModel {
         context.delete(book)
         do {
             try context.save()
-            print("책 삭제 성공: \(book.title ?? "")")
             fetchBooks()   
         } catch {
-            print("삭제 실패:", error.localizedDescription)
         }
     }
 
