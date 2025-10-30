@@ -2,21 +2,28 @@ import UIKit
 import SnapKit
 
 class RecentBookItemCell: UICollectionViewCell {
-    private let thumbnailView = UIView()
-    
+    private let imageView = UIImageView()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(thumbnailView)
-        thumbnailView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        thumbnailView.backgroundColor = .systemGray5
-        thumbnailView.layer.cornerRadius = 8
-        thumbnailView.clipsToBounds = true
+        contentView.addSubview(imageView)
+        imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
+        imageView.layer.cornerRadius = 0
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
     }
-    
+
     required init?(coder: NSCoder) { fatalError() }
-    
-    func configurePlaceholder() {
-        // 나중에 이미지뷰로 바꿀 예정
+
+    func configure(with urlString: String) {
+        if let url = URL(string: urlString),
+           let data = try? Data(contentsOf: url) {
+            imageView.image = UIImage(data: data)
+        } else {
+            imageView.image = UIImage(systemName: "book")
+            imageView.tintColor = .systemGray3
+        }
     }
 }
+
 

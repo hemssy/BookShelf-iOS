@@ -2,7 +2,6 @@ import UIKit
 import SnapKit
 import CoreData
 
-// BookDetailViewControllerDelegate 정의
 protocol BookDetailViewControllerDelegate: AnyObject {
     func didAddBook(_ book: Book)
 }
@@ -36,6 +35,38 @@ class BookDetailViewController: UIViewController {
         updateUI()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        saveRecentBook()
+    }
+
+    private func saveRecentBook() {
+        guard let book = book else { return }
+        let defaults = UserDefaults.standard
+        let key = "recentBooks"
+
+        // 기존 저장된 배열 가져오기
+        var recentBooks = defaults.array(forKey: key) as? [[String: String]] ?? []
+
+        // 중복 제거
+        recentBooks.removeAll { $0["title"] == book.title }
+
+        // 새 책을 맨 앞에 추가
+        let newBook: [String: String] = [
+            "title": book.title,
+            "thumbnailURL": book.thumbnail ?? ""
+        ]
+        recentBooks.insert(newBook, at: 0)
+
+        // 최대 10개까지만 유지
+        if recentBooks.count > 10 {
+            recentBooks = Array(recentBooks.prefix(10))
+        }
+
+        // 저장
+        defaults.set(recentBooks, forKey: key)
+    }
+
     private func setupViewModel() {
         guard let book = book else { return }
         viewModel = BookDetailViewModel(book: book)
@@ -188,7 +219,7 @@ class BookDetailViewController: UIViewController {
             thumbnailURL: book.thumbnail
         )
 
-        // 알림 전송 (SavedBooksViewController 업데이트용으로)
+        // 알림 전송 (SavedBooksViewController 업데이트용)
         NotificationCenter.default.post(name: NSNotification.Name("BookAdded"), object: nil)
 
         // 책 담기 완료 알럿 표시

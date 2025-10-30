@@ -11,6 +11,10 @@ class SearchViewController: UIViewController {
     // 뷰모델
     private let viewModel = SearchViewModel()
     
+    // 최근본책
+    private var recentBooks: [[String: String]] = []
+
+    
     // 라이프싸이클
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +25,13 @@ class SearchViewController: UIViewController {
         
         bindViewModel()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadRecentBooks()
+        tableView.reloadData()
+    }
+
     
     // 뷰모델 바인딩
     private func bindViewModel() {
@@ -34,6 +45,12 @@ class SearchViewController: UIViewController {
             print("검색 실패:", errorMessage)
         }
     }
+    
+    private func loadRecentBooks() {
+        let defaults = UserDefaults.standard
+        recentBooks = defaults.array(forKey: "recentBooks") as? [[String: String]] ?? []
+    }
+
 }
 
 // UI 셋업
@@ -109,9 +126,8 @@ extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            // 최근 본 책 섹션 (지금은 임시 UI만 있음)
             let cell = tableView.dequeueReusableCell(withIdentifier: RecentlyViewedBooksCell.identifier, for: indexPath) as! RecentlyViewedBooksCell
-            cell.configurePlaceholder()
+            cell.configure(with: recentBooks)
             return cell
         } else {
             // 기존 검색 결과 섹션
@@ -140,7 +156,7 @@ extension SearchViewController: UITableViewDelegate {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         label.textColor = .systemGray
-        label.text = section == 0 ? "최근 본 책 " : "검색 결과 🔍"
+        label.text = section == 0 ? "최근 본 책 " : "검색 결과"
         
         headerView.addSubview(label)
         label.snp.makeConstraints { make in
