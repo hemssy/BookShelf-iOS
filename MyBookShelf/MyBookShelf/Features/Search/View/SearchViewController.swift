@@ -151,7 +151,7 @@ extension SearchViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        headerView.backgroundColor = .systemBackground // 배경 통일!!
+        headerView.backgroundColor = .systemBackground
         
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .semibold)
@@ -160,11 +160,11 @@ extension SearchViewController: UITableViewDelegate {
         
         headerView.addSubview(label)
         label.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
-            make.bottom.equalToSuperview().inset(5)
+            make.leading.equalToSuperview().inset(tableView.separatorInset.left)
+            make.bottom.equalToSuperview().inset(15)
         }
         
-        // 아래 구분선 추가
+        // 구분선
         let separator = UIView()
         separator.backgroundColor = .systemGray5
         headerView.addSubview(separator)
@@ -177,7 +177,7 @@ extension SearchViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 55
     }
 
 
