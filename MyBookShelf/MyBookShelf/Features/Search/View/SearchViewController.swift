@@ -71,7 +71,7 @@ extension SearchViewController {
         tableView.register(RecentlyViewedBooksCell.self, forCellReuseIdentifier: RecentlyViewedBooksCell.identifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none // 구분선 없앰
         view.addSubview(tableView)
         
         // 결과 없음 라벨

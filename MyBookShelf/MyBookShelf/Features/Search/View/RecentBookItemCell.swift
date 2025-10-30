@@ -8,7 +8,7 @@ class RecentBookItemCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(imageView)
         imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        imageView.layer.cornerRadius = 0
+        imageView.layer.cornerRadius = 8
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
     }

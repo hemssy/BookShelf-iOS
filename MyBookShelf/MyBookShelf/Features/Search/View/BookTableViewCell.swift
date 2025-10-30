@@ -3,6 +3,7 @@ import SnapKit
 
 class BookTableViewCell: UITableViewCell {
     
+    private let containerView = UIView()
     private let titleLabel = UILabel()
     private let authorLabel = UILabel()
     private let priceLabel = UILabel()
@@ -13,26 +14,44 @@ class BookTableViewCell: UITableViewCell {
         setupLayout()
     }
     
-    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder: NSCoder) { fatalError("에러메세지") }
     
     private func setupUI() {
-        selectionStyle = .none
-        
-        titleLabel.font = .boldSystemFont(ofSize: 16)
-        titleLabel.textColor = .label
-        titleLabel.numberOfLines = 2
-        
-        authorLabel.font = .systemFont(ofSize: 14)
-        authorLabel.textColor = .secondaryLabel
-        
-        priceLabel.font = .systemFont(ofSize: 15)
-        priceLabel.textColor = .label
-        priceLabel.textAlignment = .right
-        
-        [titleLabel, authorLabel, priceLabel].forEach { contentView.addSubview($0) }
-    }
+           selectionStyle = .none
+           backgroundColor = .clear
+           
+           contentView.addSubview(containerView)
+           containerView.backgroundColor = .systemBackground
+           containerView.layer.cornerRadius = 10
+           containerView.layer.borderWidth = 0.6
+           containerView.layer.borderColor = UIColor.systemGray4.cgColor
+           
+           containerView.layer.shadowColor = UIColor.black.cgColor
+           containerView.layer.shadowOpacity = 0.08
+           containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+           containerView.layer.shadowRadius = 4
+           containerView.layer.masksToBounds = false
+           
+           titleLabel.font = .boldSystemFont(ofSize: 16)
+           titleLabel.textColor = .label
+           titleLabel.numberOfLines = 2
+           
+           authorLabel.font = .systemFont(ofSize: 14)
+           authorLabel.textColor = .secondaryLabel
+           
+           priceLabel.font = .systemFont(ofSize: 15)
+           priceLabel.textColor = .label
+           priceLabel.textAlignment = .right
+           
+           [titleLabel, authorLabel, priceLabel].forEach { containerView.addSubview($0) }
+       }
+       
     
     private func setupLayout() {
+        containerView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16))
+        }
+        
         titleLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(12)
             $0.trailing.lessThanOrEqualTo(priceLabel.snp.leading).offset(-8)
