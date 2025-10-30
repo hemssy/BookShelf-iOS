@@ -4,6 +4,13 @@ import SnapKit
 class RecentlyViewedBooksCell: UITableViewCell {
     static let identifier = "RecentlyViewedBooksCell"
     
+    private var recentBooks: [[String: String]] = []
+
+    func configure(with books: [[String: String]]) {
+        self.recentBooks = books
+        collectionView.reloadData()
+    }
+
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -20,7 +27,10 @@ class RecentlyViewedBooksCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(collectionView)
-        collectionView.snp.makeConstraints { $0.edges.equalToSuperview().inset(10) }
+        collectionView.snp.makeConstraints { $0.edges.equalToSuperview().inset(10)
+            $0.height.equalTo(150)
+        }
+        
         collectionView.dataSource = self
         collectionView.register(RecentBookItemCell.self, forCellWithReuseIdentifier: "RecentBookItemCell")
     }
@@ -35,13 +45,15 @@ class RecentlyViewedBooksCell: UITableViewCell {
 
 extension RecentlyViewedBooksCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return placeholderCount
+        return recentBooks.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecentBookItemCell", for: indexPath) as! RecentBookItemCell
-        cell.configurePlaceholder()
+        let book = recentBooks[indexPath.item]
+        cell.configure(with: book["thumbnailURL"] ?? "")
         return cell
     }
+
 }
 
