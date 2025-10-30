@@ -14,7 +14,7 @@ class RecentlyViewedBooksCell: UITableViewCell {
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 70, height: 100)
+        layout.itemSize = CGSize(width: 90, height: 135)
         layout.minimumLineSpacing = 10
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.showsHorizontalScrollIndicator = false
