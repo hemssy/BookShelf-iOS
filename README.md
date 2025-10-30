@@ -76,4 +76,4 @@ View는 변화된 데이터를 화면에 표시하는 역할을 합니다.
 
 ## 트러블슈팅 🔫
 
-### [위키 바로가기](https://github.com/hemssy/BookShelf-iOS/wiki)
+### [위키 바로가기]([https://github.com/hemssy/BookShelf-iOS/wiki](https://github.com/hemssy/BookShelf-iOS/wiki/Home👷))
