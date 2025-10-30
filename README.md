@@ -40,7 +40,9 @@ Model은 책 데이터와 관련된 구조체 및 코어데이터 엔티티를 �
 ViewModel은 로직과 데이터 흐름을 관리하며,
 View는 변화된 데이터를 화면에 표시하는 역할을 합니다.
 
-### 계층별 역할
+<br>
+
+### 🏗️ 계층별 역할
 
 | 계층 구분 | 주요 폴더 | 책임 |
 |------|------------|------|
@@ -50,7 +52,9 @@ View는 변화된 데이터를 화면에 표시하는 역할을 합니다.
 | Service | `Network/BookService` | Kakao Book REST API 통신 및 데이터 파싱 |
 | Storage | `CoreData/CoreDataStack` | Core Data 관리 및 저장 |
 
-### 데이터 흐름
+<br>
+
+### 🏗️ 데이터 흐름
 
 1. 사용자가 **검색어 입력 -> SearchViewModel**로 전달  
 2. ViewModel이 **BookService**를 통해 API 요청 수행  
