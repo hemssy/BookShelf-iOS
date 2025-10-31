@@ -69,9 +69,55 @@ View는 변화된 데이터를 화면에 표시하는 역할을 합니다.
 
 <br>
 
-## 디렉토리 구조 📂
+## 디렉토리 구조 🗂️�
 
 ```text
+MyBookShelf�
+├── 📂App
+│   ├── AppDelegate.swift
+│   ├── MainTabBarController.swift
+│   └── SceneDelegate.swift
+│
+├── 📂CoreData�
+│   ├── CoreDataStack.swift
+│   └── MyBookShelf.xcdatamodeld
+│
+├── 📂Features�
+│   ├── 📂BookDetail
+│   │   ├── 📂View
+│   │   │   └── BookDetailViewController.swift
+│   │   └── 📂ViewModel
+│   │       └── BookDetailViewModel.swift
+│   │
+│   ├── 📂SavedBooks
+│   │   ├── 📂View
+│   │   │   ├── SavedBookCell.swift
+│   │   │   └── SavedBooksViewController.swift
+│   │   └── 📂ViewModel
+│   │       └── SavedBooksViewModel.swift
+│   │
+│   └── 📂Search�
+│       ├── 📂Model
+│       │   └── Book.swift
+│       ├── 📂View
+│       │   ├── BookTableViewCell.swift
+│       │   ├── RecentBookItemCell.swift
+│       │   ├── RecentlyViewedBooksCell.swift
+│       │   └── SearchViewController.swift
+│       └── 📂ViewModel
+│           └── SearchViewModel.swift
+│
+├── 📂Network
+│   └── BookService.swift
+│
+├── 📂Resources
+│   ├── Assets.xcassets
+│   └── LaunchScreen.storyboard
+│
+├── Info.plist
+│
+└── 📦Package Dependencies �
+    └── SnapKit 5.7.1
 
 ```
 
