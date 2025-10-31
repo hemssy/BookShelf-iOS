@@ -56,13 +56,16 @@ View는 변화된 데이터를 화면에 표시하는 역할을 합니다.
 
 ### 🏗️ 데이터 흐름
 
-1. 사용자가 **검색어 입력 -> SearchViewModel**로 전달  
-2. ViewModel이 **BookService**를 통해 API 요청 수행  
-3. 응답받은 도서 데이터를 **Book 모델 배열**로 변환  
-4. ViewModel이 **onUpdate 클로저**를 통해 View에 전달  
-5. 테이블뷰가 **reloadData()** 로 검색 결과를 렌더링  
-6. 상세 모달에서 '담기' 버튼 탭 시 **SavedBooksViewModel**이 Core Data에 추가  
-7. 상세 모달 닫힘 이벤트 발생 시 **RecentBooksViewController**가 즉시 UI 갱신  
+1. 사용자가 검색어 입력 -> **SearchViewModel**로 전달  
+2. SearchViewModel이 **BookService**를 통해 API 요청 수행  
+3. 응답받은 도서 데이터를 `Book` 모델 배열로 변환  
+4. **ViewModel**이 `onUpdate` 클로저를 통해 View에 전달  
+5. 테이블뷰가 `reloadData()` 로 검색 결과를 렌더링  
+6. 상세 모달에서 '담기' 버튼 탭 시 **SavedBooksViewMode**l이 **코어데이터**에 추가
+7. `BookAdded` 알림을 받아서 **SavedBooksViewController**가 UI 갱신
+8. 상세 모달 열람 시 **BookDetailViewController**가 책 정보를 **유저디폴트**의 `recentBooks`에 저장
+9. 상세 모달 닫힘 시 **BookDetailViewController**가 `RecenetBooksUpdated` 알림 전송
+10. **SearchViewController**가 유저디폴트에서 데이터를 다시 불러와서 UI 갱신
 
 <br>
 
