@@ -39,6 +39,13 @@ class BookDetailViewController: UIViewController {
         super.viewDidAppear(animated)
         saveRecentBook()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // 최근 본 책 갱신 알림 보내기
+        NotificationCenter.default.post(name: NSNotification.Name("RecentBooksUpdated"), object: nil)
+    }
+
 
     private func saveRecentBook() {
         guard let book = book else { return }
