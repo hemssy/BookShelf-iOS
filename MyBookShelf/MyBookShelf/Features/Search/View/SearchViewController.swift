@@ -24,6 +24,15 @@ class SearchViewController: UIViewController {
         tableView.delegate = self
         
         bindViewModel()
+        
+        // 최근 본 책 갱신 알림 받기
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleRecentBooksUpdated),
+            name: NSNotification.Name("RecentBooksUpdated"),
+            object: nil
+        )
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,7 +42,6 @@ class SearchViewController: UIViewController {
     }
 
     
-    // 뷰모델 바인딩
     private func bindViewModel() {
         viewModel.whenUpdated = { [weak self] in
             guard let self = self else { return }
@@ -49,6 +57,11 @@ class SearchViewController: UIViewController {
     private func loadRecentBooks() {
         let defaults = UserDefaults.standard
         recentBooks = defaults.array(forKey: "recentBooks") as? [[String: String]] ?? []
+    }
+
+    @objc private func handleRecentBooksUpdated() {
+        loadRecentBooks()
+        tableView.reloadData()
     }
 
 }
@@ -71,7 +84,7 @@ extension SearchViewController {
         tableView.register(RecentlyViewedBooksCell.self, forCellReuseIdentifier: RecentlyViewedBooksCell.identifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = self
-        tableView.separatorStyle = .none // 구분선 없앰
+        tableView.separatorStyle = .none
         view.addSubview(tableView)
         
         // 결과 없음 라벨
