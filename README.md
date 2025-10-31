@@ -69,20 +69,20 @@ View는 변화된 데이터를 화면에 표시하는 역할을 합니다.
 
 <br>
 
-## 디렉토리 구조 🗂️�
+## 디렉토리 구조 🗂️
 
 ```text
-MyBookShelf�
+MyBookShelf
 ├── 📂App
 │   ├── AppDelegate.swift
 │   ├── MainTabBarController.swift
 │   └── SceneDelegate.swift
 │
-├── 📂CoreData�
+├── 📂CoreData
 │   ├── CoreDataStack.swift
 │   └── MyBookShelf.xcdatamodeld
 │
-├── 📂Features�
+├── 📂Features
 │   ├── 📂BookDetail
 │   │   ├── 📂View
 │   │   │   └── BookDetailViewController.swift
@@ -96,7 +96,7 @@ MyBookShelf�
 │   │   └── 📂ViewModel
 │   │       └── SavedBooksViewModel.swift
 │   │
-│   └── 📂Search�
+│   └── 📂Search
 │       ├── 📂Model
 │       │   └── Book.swift
 │       ├── 📂View
@@ -116,7 +116,7 @@ MyBookShelf�
 │
 ├── Info.plist
 │
-└── 📦Package Dependencies �
+└── 📦Package Dependencies 
     └── SnapKit 5.7.1
 
 ```
