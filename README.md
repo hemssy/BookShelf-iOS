@@ -27,8 +27,8 @@
 | 기능 구분 | 설명 | 실행 화면 |
 |------------|-------|-------------|
 | **도서 검색 (Search)** | - Kakao Book API로 책 제목, 저자, 출판사 기반 검색<br>- 검색 결과를 **UITableView** 형태로 표시<br>- 책 선택 시 **상세 모달(Book Detail)** 로 이동 | <img width="650" height="418" alt="책검색" src="https://github.com/user-attachments/assets/61618aee-ff4b-4faa-a5d3-8ac9955eb867" /> |
-| **책 상세 모달 (Book Detail)** | - 책 제목, 저자, 가격, 소개, 썸네일 이미지 표시<br>- **“담기” 버튼 탭** -> Core Data에 저장<br>- **“X” 버튼** -> 모달 닫기<br>- 모달 닫을 때 자동으로 “최근 본 책” 추가 | <img width="650" height="418" alt="책모달" src="https://github.com/user-attachments/assets/d284b2e2-8d41-4343-8660-6ea2c1c41e8f" /> |
-| **내 책장 (Saved Books)** | - 사용자가 담은 책 목록 표시<br>- **스와이프**로 개별 삭제 가능<br>- **“전체 삭제” 버튼**으로 모든 책 초기화 | <img width="650" height="418" alt="내책장" src="https://github.com/user-attachments/assets/af04fede-b3d8-4b86-95e7-787798b77c8f" /> |
+| **책 상세 모달 (Book Detail)** | - 책 제목, 저자, 가격, 소개, 썸네일 이미지 표시<br>- **'담기' 버튼 탭** -> Core Data에 저장<br>- **'X' 버튼** -> 모달 닫기<br>- 모달 닫을 때 자동으로 '최근 본 책' 추가 | <img width="650" height="418" alt="책모달" src="https://github.com/user-attachments/assets/d284b2e2-8d41-4343-8660-6ea2c1c41e8f" /> |
+| **내 책장 (Saved Books)** | - 사용자가 담은 책 목록 표시<br>- **스와이프**로 개별 삭제 가능<br>- **'전체 삭제' 버튼**으로 모든 책 초기화 | <img width="650" height="418" alt="내책장" src="https://github.com/user-attachments/assets/af04fede-b3d8-4b86-95e7-787798b77c8f" /> |
 | **최근 본 책 (Recent Books)** | - 상세 모달에서 본 책을 **UserDefaults**에 저장<br>- 가장 최근 10권까지 저장 및 표시<br>- **검색결과 화면 상단 섹션**에 컬렉션뷰로 표시 | <img width="650" height="418" alt="최근본책" src="https://github.com/user-attachments/assets/b124853d-e9ac-4179-a8f6-c5acce7ef86f" /> |
 
 <br>
